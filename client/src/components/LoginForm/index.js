@@ -70,7 +70,7 @@ export default function LoginForm() {
         <br></br>
         </div>
         <button className="btn" 
-        onClick={() => history.push('/Habits')}
+        onClick={() => history.push('/habits')}
         //onClick={this.handleFormSubmit}
         >
           Login</button>
