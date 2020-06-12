@@ -3,7 +3,7 @@ const PORT = process.env.PORT || 3030;
 const app = express();
 const mongoose = require('mongoose');
 
-const Habit = require('./models/Habit');    
+const Habit = require('./models/Habit');
 
 // not sure what this does?
 mongoose.Promise = global.Promise;
@@ -49,16 +49,6 @@ if (process.env.NODE_ENV === "production") {
 // app.use("/api/auth", auth);
 // app.get("/", (req, res) => res.send("Hello!"));
 
-// Define any API routes before this runs
-app.get("*", (request, response) => {
-    Habit.find({})
-        .then(function (data) {
-            response.status(200).json(data);
-        })
-        .catch(function () {
-            response.status(404).end("404!! Information BLACK HOLE!!");
-        });
-});
 
 app.delete("/:id", (request, response) => {
     const mongoID = request.params.id;
@@ -76,44 +66,44 @@ app.delete("/:id", (request, response) => {
 app.post("/HabitTracker", (request, response) => {
     const HabitData = request.body;
     console.log('is this working?', HabitData)
-    Habit.create(HabitData, function(){
+    Habit.create(HabitData, function () {
         response.status(200).end();
     })
-        // .then(function () {
-        //     console.log('then on post')
-        //     response.status(200).end();
-            
-        // })
-        // .catch(function (error) {
-        //     console.log('catch on post')
-        //     response.status(404).send(error.message);
-        // });
+    // .then(function () {
+    //     console.log('then on post')
+    //     response.status(200).end();
+
+    // })
+    // .catch(function (error) {
+    //     console.log('catch on post')
+    //     response.status(404).send(error.message);
+    // });
 });
 
-app.put('/api/updateScore/:id', function(req,res){
+app.put('/api/updateScore/:id', function (req, res) {
     //Habit.update()
     console.log(`
-    put route /api/
-    
-    req.body :${JSON.stringify(req.body)}
-    req.params: ${req.params.id}
-    `)
-    Habit.updateOne({_id: req.params.id }, {score: req.body.score})
-    .then(data => {
-        res.json(data)
-    })
-    
-    })
+            put route /api/
+            
+            req.body :${JSON.stringify(req.body)}
+            req.params: ${req.params.id}
+            `)
+    Habit.updateOne({ _id: req.params.id }, { score: req.body.score })
+        .then(data => {
+            res.json(data)
+        })
 
-app.get('/api/sortedHabits/:id', function(req,res){
+})
+
+app.get('/api/sortedHabits/:id', function (req, res) {
     console.log(`
-    sorted get route /api/
-    
-    req.body :${JSON.stringify(req.body)}
-    req.params: ${req.params.id}
-    `)
+            sorted get route /api/
+            
+            req.body :${JSON.stringify(req.body)}
+            req.params: ${req.params.id}
+            `)
 
-    Habit.find({_id: req.params.id })
+    Habit.find({ _id: req.params.id })
         // .limit(10)
         // .sort('score')
         .then(data => {
@@ -123,9 +113,20 @@ app.get('/api/sortedHabits/:id', function(req,res){
         .catch(function () {
             response.status(404).end("Can not find and sort list!");
         });
-    
+
 });
 
+// ****************** Define any API routes before this runs *****************************
+app.get("*", (request, response) => {
+    Habit.find({})
+        .then(function (data) {
+            response.status(200).json(data);
+        })
+        .catch(function () {
+            response.status(404).end("404!! Information BLACK HOLE!!");
+        });
+});
+//*************************************************************************************** */
 app.listen(PORT, () => {
     console.log(`🌎 ==> API server now on port ${PORT}!`);
 });
