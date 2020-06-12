@@ -3,23 +3,10 @@ const PORT = process.env.PORT || 3030;
 const app = express();
 const mongoose = require('mongoose');
 
-// const passport = require("./client/src/passport/setup");
-// const auth = require("./client/src/routes/auth");
-// const session = require("express-session");
-// const MongoStore = require("connect-mongo")(session);
-
 const Habit = require('./models/Habit');    
 
+// not sure what this does?
 mongoose.Promise = global.Promise;
-// mongoose.connect("mongodb://localhost:27017/HabitTracker", {
-//     useNewUrlParser: true
-// })
-//     .then(function(){
-//         console.log('Mongoose Connected')
-//     })
-//     .catch(err => console.log(err));
-
-
 
 // MONGO setup ===
 // =============================================================
